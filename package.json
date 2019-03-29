@@ -28,7 +28,7 @@
     "koa-router": "^7.4.0",
     "koa-views": "^6.1.5",
     "mkdirp-promise": "^5.0.1",
-    "promise-limit": "^2.7.0",
+    "promise-limit": "^2.7.0"
   },
   "devDependencies": {
     "@types/node": "^11.12.0",
