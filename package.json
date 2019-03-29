@@ -1,18 +1,18 @@
 {
-  "name": "react-prerender-plugin",
+  "name": "static-render-plugin",
   "version": "1.0.0",
   "description": "依赖无头浏览器来做react页面的预渲染",
   "main": "index",
   "repository": {
     "type": "git",
-    "url": "https://github.com/liu2080019/react-prerender-plugin"
+    "url": "https://github.com/liu2080019/static-render-plugin"
   },
   "author": "Mingo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/liu2080019/react-prerender-plugin/issues"
+    "url": "https://github.com/liu2080019/static-render-plugin/issues"
   },
-  "homepage": "https://github.com/liu2080019/react-prerender-plugin",
+  "homepage": "https://github.com/liu2080019/static-render-plugin",
   "contributors": [
     {
       "name": "Mingo",
