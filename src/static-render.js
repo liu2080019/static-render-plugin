@@ -27,7 +27,7 @@ class StaticRender {
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
-            this._puppeteer = yield puppeteer.launch(this._options);
+            this._puppeteer = yield puppeteer.launch({ renderAfterTime: this._delay, maxConcurrentRoutes: 0 });
         });
     }
     destroy() { }
@@ -38,7 +38,7 @@ class StaticRender {
     }
     go() {
         return __awaiter(this, void 0, void 0, function* () {
-            const pagePromises = Promise.all(this._routes.map(route => () => __awaiter(this, void 0, void 0, function* () {
+            const pagePromises = Promise.all(this._routes.map((route) => __awaiter(this, void 0, void 0, function* () {
                 const page = yield this._puppeteer.newPage();
                 const url = `http://localhost:${this._port}`;
                 yield page.goto(`${url}${route}`, { waituntil: 'networkidle0' });

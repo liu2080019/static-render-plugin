@@ -26,7 +26,8 @@ class StaticRender {
   }
 
   async init () {
-    this._puppeteer = await puppeteer.launch(this._options)
+    // this._puppeteer = await puppeteer.launch(this._options)
+    this._puppeteer = await puppeteer.launch({renderAfterTime: this._delay, maxConcurrentRoutes: 0})
   }
 
   destroy () { }
@@ -39,8 +40,7 @@ class StaticRender {
 
   async go () {
     const pagePromises = Promise.all(
-      this._routes.map(route =>
-        async () => {
+      this._routes.map(async (route) => {
           // 新建页面
           const page = await this._puppeteer.newPage();
           // 设置URL
