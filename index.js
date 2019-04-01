@@ -25,6 +25,7 @@ PreRenderPlugin.prototype.apply = function (compiler) {
         yield this._staticRender.init();
         const res = yield this._staticRender.go();
         yield this._dealFile.createHtml(res);
+        done();
     }));
 };
 module.exports = PreRenderPlugin;
