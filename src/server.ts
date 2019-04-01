@@ -9,6 +9,7 @@ class Server {
   // 路径
   _resource: any;
   _port: number;
+  _server: any;
 
   constructor (resource: any, port: number) {
     this._resource = resource;
@@ -30,11 +31,11 @@ class Server {
     }));
     app.use(koaStatic(this._resource));
     app.use(koaRouter.routes());
-    app.listen(this._port);
+    this._server = app.listen(this._port);
   }
 
-  destroy () {
-
+  closeFunc() {
+    this._server.close();
   }
 }
 

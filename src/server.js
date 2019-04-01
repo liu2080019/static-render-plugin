@@ -35,10 +35,11 @@ class Server {
             }));
             app.use(koaStatic(this._resource));
             app.use(koaRouter.routes());
-            app.listen(this._port);
+            this._server = app.listen(this._port);
         });
     }
-    destroy() {
+    closeFunc() {
+        this._server.close();
     }
 }
 exports.default = Server;

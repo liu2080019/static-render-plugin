@@ -28,6 +28,8 @@ PreRenderPlugin.prototype.apply = function (compiler: any) {
     await this._staticRender.init();
     const res = await this._staticRender.go();
     await this._dealFile.createHtml(res);
+    this._server.closeFunc();
+    this._staticRender.closeFunc();
     done();
   })
 };

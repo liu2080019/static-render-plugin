@@ -18,7 +18,7 @@ class DealFile {
     createHtml(htmlList) {
         return __awaiter(this, void 0, void 0, function* () {
             return Promise.all(htmlList.map((htmlInfo) => {
-                const outputFile = path.join(this._resource, `${htmlInfo.route === '/' ? 'index' : htmlInfo.route}.html`);
+                const outputFile = path.join(this._resource, `${htmlInfo.route === '/' ? 'home' : htmlInfo.route}.html`);
                 return mkdirp(this._resource)
                     .then(() => {
                     return new Promise((resolve, reject) => {

@@ -30,6 +30,9 @@ class StaticRender {
             this._puppeteer = yield puppeteer.launch({ renderAfterTime: this._delay, maxConcurrentRoutes: 0 });
         });
     }
+    closeFunc() {
+        this._puppeteer.close();
+    }
     go() {
         return __awaiter(this, void 0, void 0, function* () {
             const pagePromises = Promise.all(this._routes.map((route) => __awaiter(this, void 0, void 0, function* () {
