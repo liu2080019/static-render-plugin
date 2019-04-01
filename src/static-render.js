@@ -30,19 +30,17 @@ class StaticRender {
             this._puppeteer = yield puppeteer.launch({ renderAfterTime: this._delay, maxConcurrentRoutes: 0 });
         });
     }
-    destroy() { }
-    renderDelay() {
-        return new Promise((resolve) => {
-            setTimeout(() => resolve(), this._delay);
-        });
-    }
     go() {
         return __awaiter(this, void 0, void 0, function* () {
             const pagePromises = Promise.all(this._routes.map((route) => __awaiter(this, void 0, void 0, function* () {
                 const page = yield this._puppeteer.newPage();
                 const url = `http://localhost:${this._port}`;
                 yield page.goto(`${url}${route}`, { waituntil: 'networkidle0' });
-                yield page.evaluate(this.renderDelay);
+                yield page.evaluate(() => {
+                    return new Promise((resolve) => {
+                        setTimeout(() => resolve(), 5000);
+                    });
+                });
                 const result = {
                     originalRoute: route,
                     route: yield page.evaluate('window.location.pathname'),

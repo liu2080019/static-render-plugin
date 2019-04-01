@@ -26,16 +26,7 @@ class StaticRender {
   }
 
   async init () {
-    // this._puppeteer = await puppeteer.launch(this._options)
     this._puppeteer = await puppeteer.launch({renderAfterTime: this._delay, maxConcurrentRoutes: 0})
-  }
-
-  destroy () { }
-
-  renderDelay() {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve(), this._delay);
-    })
   }
 
   async go () {
@@ -48,7 +39,11 @@ class StaticRender {
           // 页面跳转
           await page.goto(`${url}${route}`, { waituntil: 'networkidle0' });
 
-          await page.evaluate(this.renderDelay);
+          await page.evaluate(() => {
+            return new Promise((resolve) => {
+              setTimeout(() => resolve(), 5000);
+            })
+          });
 
           const result = {
             originalRoute: route,
