@@ -11,6 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Koa = require("koa");
 const views = require("koa-views");
 const path = require("path");
+const fs = require("fs");
 const koaStatic = require("koa-static");
 const KoaRouter = require("koa-router");
 class Server {
@@ -18,12 +19,16 @@ class Server {
         this._resource = resource;
         this._port = port;
     }
-    initialize() {
+    init() {
         return __awaiter(this, void 0, void 0, function* () {
             const app = new Koa();
             const koaRouter = new KoaRouter();
             koaRouter.get('/', (ctx) => __awaiter(this, void 0, void 0, function* () {
                 yield ctx.render(path.join(this._resource, 'index.html'));
+            }));
+            koaRouter.get('*', (ctx) => __awaiter(this, void 0, void 0, function* () {
+                ctx.type = 'html';
+                ctx.body = fs.createReadStream(path.join(this._resource, 'index.html'));
             }));
             app.use(views(this._resource, {
                 extension: 'html'
