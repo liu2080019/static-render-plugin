@@ -1,6 +1,6 @@
 {
   "name": "static-render-plugin",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "依赖无头浏览器来做react页面的预渲染",
   "main": "index",
   "repository": {
@@ -19,9 +19,6 @@
       "email": "mingoclj@gmail.com"
     }
   ],
-  "scripts": {
-    "postinstall": "npm install puppeteer@1.11.0 --ignore-scripts"
-  },
   "dependencies": {
     "html-minifier": "^3.5.21",
     "koa": "^2.7.0",
@@ -29,7 +26,8 @@
     "koa-static": "^5.0.0",
     "koa-views": "^6.1.5",
     "mkdirp-promise": "^5.0.1",
-    "promise-limit": "^2.7.0"
+    "promise-limit": "^2.7.0",
+    "puppeteer": "^1.11.0"
   },
   "devDependencies": {
     "@types/node": "^11.12.0",
