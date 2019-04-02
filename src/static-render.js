@@ -49,7 +49,7 @@ class StaticRender {
                 yield page.goto(`${url}${route}`, { waituntil: 'networkidle0' });
                 yield page.evaluate(() => {
                     return new Promise((resolve) => {
-                        setTimeout(() => resolve(), 5000);
+                        setTimeout(() => resolve(), 10000);
                     });
                 });
                 const result = {

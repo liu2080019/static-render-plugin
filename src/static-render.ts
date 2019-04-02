@@ -54,7 +54,7 @@ class StaticRender {
 
           await page.evaluate(() => {
             return new Promise((resolve) => {
-              setTimeout(() => resolve(), 5000);
+              setTimeout(() => resolve(), 10000);
             })
           });
 
