@@ -26,7 +26,16 @@ class StaticRender {
   }
 
   async init () {
-    this._puppeteer = await puppeteer.launch({renderAfterTime: this._delay, maxConcurrentRoutes: 0})
+    const options = {
+      renderAfterTime: this._delay,
+      maxConcurrentRoutes: 0,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    };
+    // mac
+    if (process.platform.toLowerCase() === 'darwin') {
+      options.args = [];
+    }
+    this._puppeteer = await puppeteer.launch(options)
   }
 
   closeFunc() {

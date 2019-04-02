@@ -27,7 +27,15 @@ class StaticRender {
     }
     init() {
         return __awaiter(this, void 0, void 0, function* () {
-            this._puppeteer = yield puppeteer.launch({ renderAfterTime: this._delay, maxConcurrentRoutes: 0 });
+            const options = {
+                renderAfterTime: this._delay,
+                maxConcurrentRoutes: 0,
+                args: ['--no-sandbox', '--disable-setuid-sandbox']
+            };
+            if (process.platform.toLowerCase() === 'darwin') {
+                options.args = [];
+            }
+            this._puppeteer = yield puppeteer.launch(options);
         });
     }
     closeFunc() {
