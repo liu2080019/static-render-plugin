@@ -13,12 +13,16 @@ interface argsType {
   // 资源文件
   resource: any,
   // 渲染延迟
-  delay: number
+  delay: number,
+  // 端口
+  port: number,
+  // log
+  isLog: boolean
 }
 
 function PreRenderPlugin (args: argsType) {
   this._server = new Server(args.resource, PORT);
-  this._staticRender = new StaticRender(args.routes, args.delay, PORT);
+  this._staticRender = new StaticRender(args.routes, args.delay, args.port || PORT, args.isLog || false);
   this._dealFile = new DealFile(args.resource);
 }
 

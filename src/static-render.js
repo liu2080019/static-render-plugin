@@ -11,10 +11,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const path = require("path");
 const puppeteer = require('puppeteer');
 class StaticRender {
-    constructor(routes, delay, port) {
+    constructor(routes, delay, port, isLog) {
         this._routes = routes;
         this._delay = delay;
         this._port = port;
+        this._isLog = isLog;
         let executablePath = path.join(__dirname, './chrome-linux/google-chrome-stable_current_x86_64.rpm');
         if (process.platform.toLowerCase() === 'darwin') {
             executablePath = path.join(__dirname, './chrome-mac/Chromium.app/Contents/MacOS/Chromium');
@@ -41,22 +42,25 @@ class StaticRender {
     closeFunc() {
         this._puppeteer.close();
     }
+    print(msg) {
+        if (this._isLog) {
+            console.log(msg);
+        }
+    }
     go() {
         return __awaiter(this, void 0, void 0, function* () {
             const pagePromises = Promise.all(this._routes.map((route) => __awaiter(this, void 0, void 0, function* () {
                 const page = yield this._puppeteer.newPage();
                 const url = `http://localhost:${this._port}`;
                 yield page.goto(`${url}${route}`, { waituntil: 'networkidle0' });
-                yield page.evaluate(() => {
-                    return new Promise((resolve) => {
-                        setTimeout(() => resolve(), 10000);
-                    });
-                });
+                this.print(`${new Date()}:::${route}页面打开`);
+                yield page.waitFor(this._delay);
                 const result = {
                     originalRoute: route,
                     route: yield page.evaluate('window.location.pathname'),
                     html: yield page.content()
                 };
+                this.print(`${new Date()}:::${route}获取页面内容:${result.html}`);
                 yield page.close();
                 return result;
             })));

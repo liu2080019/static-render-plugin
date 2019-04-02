@@ -7,11 +7,13 @@ class StaticRender {
   _options: any;
   _puppeteer: any;
   _port: number;
+  _isLog: boolean;
 
-  constructor (routes: string[], delay: number, port: number) {
+  constructor (routes: string[], delay: number, port: number, isLog: boolean) {
     this._routes = routes;
     this._delay = delay;
     this._port = port;
+    this._isLog = isLog;
     // default linux
     let executablePath = path.join(__dirname, './chrome-linux/google-chrome-stable_current_x86_64.rpm');
     if (process.platform.toLowerCase() === 'darwin') {
@@ -42,6 +44,12 @@ class StaticRender {
     this._puppeteer.close();
   }
 
+  print(msg: string) {
+    if (this._isLog) {
+      console.log(msg);
+    }
+  }
+
   async go () {
     const pagePromises = Promise.all(
       this._routes.map(async (route) => {
@@ -52,6 +60,8 @@ class StaticRender {
           // 页面跳转
           await page.goto(`${url}${route}`, { waituntil: 'networkidle0' });
 
+          this.print(`${new Date()}:::${route}页面打开`);
+
           await page.waitFor(this._delay);
 
           const result = {
@@ -59,6 +69,9 @@ class StaticRender {
             route: await page.evaluate('window.location.pathname'),
             html: await page.content()
           };
+
+          this.print(`${new Date()}:::${route}获取页面内容:${result.html}`);
+
           await page.close();
           return result
         }

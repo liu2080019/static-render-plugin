@@ -16,7 +16,7 @@ const { minify } = require('html-minifier');
 const PORT = 6789;
 function PreRenderPlugin(args) {
     this._server = new server_1.default(args.resource, PORT);
-    this._staticRender = new static_render_1.default(args.routes, args.delay, PORT);
+    this._staticRender = new static_render_1.default(args.routes, args.delay, args.port || PORT, args.isLog);
     this._dealFile = new deal_file_1.default(args.resource);
 }
 PreRenderPlugin.prototype.apply = function (compiler) {
