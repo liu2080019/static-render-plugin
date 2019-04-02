@@ -29,6 +29,7 @@ class StaticRender {
 
   async init () {
     const options = {
+      ignoreHTTPSErrors: true,
       renderAfterTime: this._delay,
       maxConcurrentRoutes: 0,
       args: ['--no-sandbox', '--disable-setuid-sandbox']
@@ -55,6 +56,18 @@ class StaticRender {
       this._routes.map(async (route) => {
           // 新建页面
           const page = await this._puppeteer.newPage();
+          // 监听抓取页面的log
+          page.on('console', (msg: any) => {
+            if (typeof msg === 'object') {
+              this.print('=========================打印页面日志================================');
+              this.print(JSON.stringify(msg));
+              this.print('=========================打印页面日志end================================');
+            } else {
+              this.print('=========================打印页面日志================================');
+              this.print(msg);
+              this.print('=========================打印页面日志end================================');
+            }
+          });
           // 设置URL
           const url = `http://localhost:${this._port}`;
           // 页面跳转

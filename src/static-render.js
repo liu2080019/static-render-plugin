@@ -29,6 +29,7 @@ class StaticRender {
     init() {
         return __awaiter(this, void 0, void 0, function* () {
             const options = {
+                ignoreHTTPSErrors: true,
                 renderAfterTime: this._delay,
                 maxConcurrentRoutes: 0,
                 args: ['--no-sandbox', '--disable-setuid-sandbox']
@@ -51,6 +52,18 @@ class StaticRender {
         return __awaiter(this, void 0, void 0, function* () {
             const pagePromises = Promise.all(this._routes.map((route) => __awaiter(this, void 0, void 0, function* () {
                 const page = yield this._puppeteer.newPage();
+                page.on('console', (msg) => {
+                    if (typeof msg === 'object') {
+                        this.print('=========================打印页面日志================================');
+                        this.print(JSON.stringify(msg));
+                        this.print('=========================打印页面日志end================================');
+                    }
+                    else {
+                        this.print('=========================打印页面日志================================');
+                        this.print(msg);
+                        this.print('=========================打印页面日志end================================');
+                    }
+                });
                 const url = `http://localhost:${this._port}`;
                 yield page.goto(`${url}${route}`, { waituntil: 'networkidle0' });
                 this.print(`${new Date()}:::${route}页面打开`);
