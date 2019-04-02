@@ -52,11 +52,7 @@ class StaticRender {
           // 页面跳转
           await page.goto(`${url}${route}`, { waituntil: 'networkidle0' });
 
-          await page.evaluate(() => {
-            return new Promise((resolve) => {
-              setTimeout(() => resolve(), 10000);
-            })
-          });
+          await page.waitFor(this._delay);
 
           const result = {
             originalRoute: route,
