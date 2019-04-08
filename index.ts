@@ -9,7 +9,7 @@ const PORT = 6789;
 
 interface argsType {
   // 路由地址
-  routes: string[],
+  routes: any[],
   // 资源文件
   resource: any,
   // 渲染延迟

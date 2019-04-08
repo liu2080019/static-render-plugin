@@ -2,14 +2,14 @@ import * as path from 'path';
 const puppeteer = require('puppeteer');
 
 class StaticRender {
-  _routes: string[];
+  _routes: any[];
   _delay: number;
   _options: any;
   _puppeteer: any;
   _port: number;
   _isLog: boolean;
 
-  constructor (routes: string[], delay: number, port: number, isLog: boolean) {
+  constructor (routes: any[], delay: number, port: number, isLog: boolean) {
     this._routes = routes;
     this._delay = delay;
     this._port = port;
@@ -71,15 +71,15 @@ class StaticRender {
           // 设置URL
           const url = `http://localhost:${this._port}`;
           // 页面跳转
-          await page.goto(`${url}${route}`, { waituntil: 'networkidle0' });
+          await page.goto(`${url}${route.path}`, { waituntil: 'networkidle0' });
 
-          this.print(`${new Date()}:::${route}页面打开`);
+          this.print(`${new Date()}:::${route.path}页面打开`);
 
           await page.waitFor(this._delay);
 
           const result = {
-            originalRoute: route,
-            route: await page.evaluate('window.location.pathname'),
+            name: route.name,
+            route: route.path,
             html: await page.content()
           };
 

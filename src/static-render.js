@@ -65,12 +65,12 @@ class StaticRender {
                     }
                 });
                 const url = `http://localhost:${this._port}`;
-                yield page.goto(`${url}${route}`, { waituntil: 'networkidle0' });
-                this.print(`${new Date()}:::${route}页面打开`);
+                yield page.goto(`${url}${route.path}`, { waituntil: 'networkidle0' });
+                this.print(`${new Date()}:::${route.path}页面打开`);
                 yield page.waitFor(this._delay);
                 const result = {
-                    originalRoute: route,
-                    route: yield page.evaluate('window.location.pathname'),
+                    name: route.name,
+                    route: route.path,
                     html: yield page.content()
                 };
                 this.print(`${new Date()}:::${route}获取页面内容:${result.html}`);

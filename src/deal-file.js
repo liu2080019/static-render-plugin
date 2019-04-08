@@ -11,6 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const path = require("path");
 const fs = require("fs");
 const mkdirp = require('mkdirp-promise');
+const minify = require('html-minifier').minify;
 class DealFile {
     constructor(resource) {
         this._resource = resource;
@@ -18,11 +19,16 @@ class DealFile {
     createHtml(htmlList) {
         return __awaiter(this, void 0, void 0, function* () {
             return Promise.all(htmlList.map((htmlInfo) => {
-                const outputFile = path.join(this._resource, `${htmlInfo.route === '/' ? 'index' : htmlInfo.route}.html`);
+                const outputFile = path.join(this._resource, `${htmlInfo.name}.html`);
                 return mkdirp(this._resource)
                     .then(() => {
                     return new Promise((resolve, reject) => {
-                        fs.writeFile(outputFile, htmlInfo.html.trim(), err => {
+                        fs.writeFile(outputFile, minify(htmlInfo.html, {
+                            removeComments: true,
+                            collapseWhitespace: true,
+                            minifyJS: true,
+                            minifyCSS: true
+                        }), err => {
                             if (err)
                                 reject(`写文件失败"${outputFile}" \n ${err}.`);
                         });
