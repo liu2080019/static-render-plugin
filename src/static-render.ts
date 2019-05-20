@@ -22,7 +22,6 @@ class StaticRender {
     }
     this._options = {
       headless: true,
-      executablePath,
       renderAfterTime: delay,
     }
   }

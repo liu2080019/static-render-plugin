@@ -1,6 +1,6 @@
 {
   "name": "static-render-plugin",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "依赖无头浏览器来做react页面的预渲染",
   "main": "index",
   "repository": {
